@@ -1,6 +1,6 @@
 #HTMLPictureElement
 
-* HTMLPictureElement.js 1.0.1
+* HTMLPictureElement.js 1.0.2
 * Author: Marek Zeman
 * Twitter: [MarekZeman91](http://twitter.com/MarekZeman91/)
 * URL: [http://marekzeman.cz](http://marekzeman.cz)
