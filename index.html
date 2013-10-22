@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTMLPictureElement Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <style>
+        html, body, picture, img, p {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            margin: 10px;
+        }
+        picture {
+            max-width: 50%;
+            position: relative;
+            display: inline;
+            float: left;
+        }
+        picture > img {
+            max-width: 100%;
+            display: block;
+        }
+        picture > p {
+            position: absolute;
+            padding: 5px;
+            margin: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <picture>
+        <source src="600.png" media="(min-width: 1220px)">
+        <source src="550.png" media="(min-width: 1120px)">
+        <source src="500.png" media="(min-width: 1020px)">
+        <source src="450.png" media="(min-width: 920px)">
+        <source src="400.png" media="(min-width: 820px)">
+        <img src="400.png" alt="First Image">
+        <p>First Image</p>
+    </picture>
+
+    <picture alt="Second Picture">
+        <source src="600.png" media="(min-width: 1220px)">
+        <source src="550.png" media="(min-width: 1120px)">
+        <source src="500.png" media="(min-width: 1020px)">
+        <source src="450.png" media="(min-width: 920px)">
+        <source src="400.png" media="(min-width: 820px)">
+        <img src="400.png">
+        <p>Second Picture</p>
+    </picture>
+
+    <script src="HTMLPictureElement.js"></script>
+</body>
+</html>
