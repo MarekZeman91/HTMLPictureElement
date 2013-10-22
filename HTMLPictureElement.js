@@ -1,5 +1,5 @@
 /*
- * HTMLPictureElement.js 0.9
+ * HTMLPictureElement.js 1.0
  * Author: Marek Zeman
  * Twitter: MarekZeman91
  * URL: http://marekzeman.cz
@@ -10,36 +10,60 @@
 (function( d, w ) {
     if ( !( "HTMLPictureElement" in d ) && w.matchMedia ) {
         d.createElement( "picture" ).prototype = d.createElement( "img" ).prototype;
-        var picEls, picEl = {}, i, l, _i, _l;
+        var pictureElements, pictureElement = {};
 
-        function init() {
-            // converts to pure array to be able to work with it
-            picEls = [].slice.call( d.getElementsByTagName( "picture" ) );
-            for ( i = 0, l = picEls.length; i < l; i++ ) {
-                picEl = {};
-                picEl.el = picEls[i];
-                picEl.source = picEl.el.getElementsByTagName( "source" );
-                picEl.img = picEl.el.getElementsByTagName( "img" )[0] || d.createElement( "img" );
-                picEl.el.appendChild( picEl.img )
-                picEl.defaultURL = picEl.img.src.replace( /[\s\b\t\n\r\f]+/g, "" );
-                picEl.alt = picEl.img.getAttribute( "alt" ) || picEl.el.getAttribute( "alt" ) || "";
-                if ( picEl.alt ) {
-                    picEl.img.setAttribute( "alt", picEl.alt );
+        function parseSource( sources, source, srcset, match, i1, l1, i2, l2 ) {
+            for ( i1 = 0, l1 = sources.length; i1 < l1; i1++ ) {
+                source = sources[i1];
+                if ( source.getAttribute( "srcset" ) ) {
+                    sources[i1] = [];
+                    srcset = source.getAttribute( "srcset" ).split( /,\s+/g );
+                    for ( i2 = 0, l2 = srcset.length; i2 < l2; i2++ ) {
+                        match = srcset[i2].match( /^([^\s]+)\s+([\d\.]+)x$/ );
+                        if ( match.length === 3 ) {
+                            sources[i1].push({ query: source.getAttribute( "media" ) + " and (-webkit-min-device-pixel-ratio: " + match[2] + ")", source: match[1] })
+                            sources[i1].push({ query: source.getAttribute( "media" ) + " and (min--moz-device-pixel-ratio: " + match[2] + ")", source: match[1] })
+                            sources[i1].push({ query: source.getAttribute( "media" ) + " and (min-device-pixel-ratio: " + match[2] + ")", source: match[1] })
+                        }
+                    }
+                } else if ( source.getAttribute( "src" ) ) {
+                    sources[i1] = [{ query: source.getAttribute( "media" ), source: source.getAttribute( "src" ) }];
                 }
-                picEls[i] = picEl;
+            }
+            return sources || [];
+        }
+
+        function init( i1, l1 ) {
+            pictureElements = [].slice.call( d.getElementsByTagName( "picture" ) );
+            for ( i1 = 0, l1 = pictureElements.length; i1 < l1; i1++ ) {
+                pictureElement = {};
+                pictureElement.el = pictureElements[i1];
+                pictureElement.img = pictureElement.el.getElementsByTagName( "img" )[0] || d.createElement( "img" );
+                pictureElement.el.appendChild( pictureElement.img );
+                pictureElement.defaultURL = pictureElement.img.getAttribute( "src" ).replace( /[\s\b\t\n\r\f]+/g, "" );
+                pictureElement.alt = pictureElement.img.getAttribute( "alt" ) || pictureElement.el.getAttribute( "alt" ) || "";
+                if ( !!pictureElement.alt ) {
+                    pictureElement.img.setAttribute( "alt", pictureElement.alt );
+                }
+
+                pictureElement.sources = parseSource( [].slice.call( pictureElement.el.getElementsByTagName( "source" ) ) );
+                pictureElements[i1] = pictureElement;
             }
             setURLs();
         }
 
-        function setURLs() {
-            for ( i = 0; i < l; i++ ) {
-                picEl = picEls[i];
-                for ( _i = 0, _l = picEl.source.length; _i < _l; _i++ ) {
-                    if ( w.matchMedia( picEl.source[ _i ].getAttribute( "media" ) ).matches && _i + 1 !== _l ) {
-                        picEl.img.setAttribute( "src", picEl.source[ _i ].getAttribute( "src" ) || picEl.defaultURL );
-                        break;
-                    } else {
-                        picEl.img.setAttribute( "src", picEl.defaultURL );
+        function setURLs( i1, l1, i2, l2 ) {
+            for ( i1 = 0, l1 = pictureElements.length; i1 < l1; i1++ ) {
+                pictureElement = pictureElements[i1];
+                browseSources:
+                for ( i2 = 0, l2 = pictureElement.sources.length; i2 < l2; i2++ ) {
+                    for ( i3 = 0, l3 = pictureElement.sources[i2].length; i3 < l3; i3++ ) {
+                        if ( w.matchMedia( pictureElement.sources[i2][i3].query ).matches && i2 + 1 !== l2 ) {
+                            pictureElement.img.setAttribute( "src", pictureElement.sources[i2][i3].source );
+                            break browseSources;
+                        } else if ( i2 + 1 === l2 ) {
+                            pictureElement.img.setAttribute( "src", pictureElement.defaultURL );
+                        }
                     }
                 }
             }
