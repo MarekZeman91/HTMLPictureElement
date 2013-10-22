@@ -5,7 +5,7 @@
 * Twitter: [MarekZeman91](http://twitter.com/MarekZeman91/)
 * URL: [http://marekzeman.cz](http://marekzeman.cz)
 * Copyright: Marek Zeman &copy; 2013
-* License: Simly … use it but don’t sell it!
+* License: Simply … use it but don’t sell it!
 
 
 ## How it works
@@ -15,7 +15,7 @@ HTMLPictureElement JavaScript polyfill is simple script that allows you to use [
 
 **There is only one rule:** always have there ONE `img` element!
 
-Because if there is no media match, it will use the `img`’s url as fallback or if user uses old browser, the script won’t run so he will see the default `img`.
+Because if there is no media match, it will use the `img` url as fallback or if users have old browsers (we should kill those people), the script won’t run so they will see the default `img`.
 
 Yes, if there is no `img` it will create one but the fallback url will be empty …
 
