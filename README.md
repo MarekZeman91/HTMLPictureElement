@@ -1,6 +1,6 @@
 #HTMLPictureElement
 
-* HTMLPictureElement.js 0.9
+* HTMLPictureElement.js 1.0.1
 * Author: Marek Zeman
 * Twitter: [MarekZeman91](http://twitter.com/MarekZeman91/)
 * URL: [http://marekzeman.cz](http://marekzeman.cz)
@@ -17,14 +17,14 @@ HTMLPictureElement JavaScript polyfill is simple script that allows you to use [
 
 1. Always have there **ONE** `img` element! Because if there is no media match, it will use the `img` url as fallback or if users have old browsers (we should kill those people), the script won’t run so they will see the default `img`.<br>Yes, if there is no `img` it will create one but the fallback url will be empty.
 2. Order media queries from **highest** to **lowest**! Because when the script matches media query it stops checking other rules for that picture (speed optimization!).
-3. You can use only `srcset` or `src`, if you use both, `srcset` will be used. For `srcset` you have to use format: `srcset="image_url min-device-pixel-ratio, …"`
+3. You can use only `srcset` or `src`, if you use both, `srcset` will be used. For `srcset` you have to use format: `srcset="image_url min-device-pixel-ratio, …"` and ordered from **lowest** to **highest**!
 
 ---
 
 ### Example
     <picture>
         <source media="(min-width: 1220px)" src="600.png">
-        <source media="(min-width: 820px)" srcset="400.png 1x, 500.png 1.5x, 600.png 2x">
+        <source media="(min-width: 400px)" srcset="400.png 1x, 500.png 1.5x, 600.png 2x">
         <img src="400.png" alt="First Image">
         <p>First Image</p>
     </picture>
