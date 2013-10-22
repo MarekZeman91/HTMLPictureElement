@@ -1,5 +1,5 @@
 /*
- * HTMLPictureElement.js 1.0
+ * HTMLPictureElement.js 1.0.1
  * Author: Marek Zeman
  * Twitter: MarekZeman91
  * URL: http://marekzeman.cz
@@ -57,13 +57,12 @@
                 pictureElement = pictureElements[i1];
                 browseSources:
                 for ( i2 = 0, l2 = pictureElement.sources.length; i2 < l2; i2++ ) {
-                    for ( i3 = 0, l3 = pictureElement.sources[i2].length; i3 < l3; i3++ ) {
-                        if ( w.matchMedia( pictureElement.sources[i2][i3].query ).matches && i2 + 1 !== l2 ) {
-                            pictureElement.img.setAttribute( "src", pictureElement.sources[i2][i3].source );
+                    for ( l3 = pictureElement.sources[i2].length - 1; !!l3; l3-- ) {
+                        if ( w.matchMedia( pictureElement.sources[i2][l3].query ).matches ) {
+                            pictureElement.img.setAttribute( "src", pictureElement.sources[i2][l3].source );
                             break browseSources;
-                        } else if ( i2 + 1 === l2 ) {
-                            pictureElement.img.setAttribute( "src", pictureElement.defaultURL );
                         }
+                        pictureElement.img.setAttribute( "src", pictureElement.defaultURL );
                     }
                 }
             }
