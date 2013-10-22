@@ -1,5 +1,5 @@
 /*
- * HTMLPictureElement.js 1.0.3
+ * HTMLPictureElement.js 1.0.4
  * Author: Marek Zeman
  * Twitter: MarekZeman91
  * URL: http://marekzeman.cz
@@ -61,6 +61,8 @@
                         if ( w.matchMedia( pictureElement.sources[i2][l3].query ).matches ) {
                             pictureElement.img.setAttribute( "src", pictureElement.sources[i2][l3].source );
                             break browseSources;
+                        } else if ( l3 === 0 ) {
+                            pictureElement.img.setAttribute( "src", pictureElement.defaultURL );
                         }
                     }
                 }
