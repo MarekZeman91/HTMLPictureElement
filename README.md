@@ -1,6 +1,6 @@
 #HTMLPictureElement
 
-* HTMLPictureElement.js 1.0.2
+* HTMLPictureElement.js 1.0.3
 * Author: Marek Zeman
 * Twitter: [MarekZeman91](http://twitter.com/MarekZeman91/)
 * URL: [http://marekzeman.cz](http://marekzeman.cz)
@@ -10,6 +10,8 @@
 
 ## How it works
 HTMLPictureElement JavaScript polyfill is simple script that allows you to use [responsive images](http://www.w3.org/TR/2013/WD-html-picture-element-20130226/) in modern browsers. Does not work in **IE9 & older**, but it is really usable for smartphones or modern browsers!
+
+All picture elements are cached, if you want to init them again, call `HTMLPictureElement.init()`.
 
 ---
 

@@ -1,10 +1,10 @@
 /*
- * HTMLPictureElement.js 1.0.2
+ * HTMLPictureElement.js 1.0.3
  * Author: Marek Zeman
  * Twitter: MarekZeman91
  * URL: http://marekzeman.cz
  * Copyright: Marek Zeman - 2013
- * License: Simly … use it but don’t sell it!
+ * License: Simply … use it but don’t sell it!
  */
 
 (function( d, w ) {
@@ -57,12 +57,10 @@
                 pictureElement = pictureElements[i1];
                 browseSources:
                 for ( i2 = 0, l2 = pictureElement.sources.length; i2 < l2; i2++ ) {
-                    for ( l3 = pictureElement.sources[i2].length - 1; !!l3; l3-- ) {
+                    for ( l3 = pictureElement.sources[i2].length - 1; l3 >= 0; l3-- ) {
                         if ( w.matchMedia( pictureElement.sources[i2][l3].query ).matches ) {
                             pictureElement.img.setAttribute( "src", pictureElement.sources[i2][l3].source );
                             break browseSources;
-                        } else if ( i2 + 1 === l2 ) {
-                            pictureElement.img.setAttribute( "src", pictureElement.defaultURL );
                         }
                     }
                 }
